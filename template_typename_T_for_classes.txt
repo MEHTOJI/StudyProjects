@@ -1,0 +1,44 @@
+/*
+Шаблонный класс out, синтаксис описан на 7-16 строке, инициализируется как родительский класс
+в main автоматически. Класс Type наследуется от класса out (*см. конструктор базового класса 22 строка).
+Так же реализована специализация для класса out (в данном случае поведение изменяется при работе
+со string-типом (29-35 строки)
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+template <class T>
+class out {
+public:
+	out(T value) {
+		this->value = value;
+	}
+
+protected:
+	T value;
+};
+
+template <class T>
+class Type : public out<T> {
+public:
+	Type(T value) : out<T>(value) {
+		cout << typeid(value).name() << endl;
+	}
+};
+
+template<>
+class out<string> {
+public:
+	out(string value) {
+		cout << "---" << value << "----" << endl;
+	}
+};
+
+
+int main() {
+	string q = "10";
+	out<string> a(q);
+	return 0;
+}

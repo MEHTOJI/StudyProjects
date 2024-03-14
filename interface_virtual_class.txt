@@ -1,0 +1,66 @@
+/*Работа с интерфейсом в c++. В языке c++ нет ключевого слова интерфейс, в отличие от других
+языков рограммирования.Использование чисто виртуального класса Interface это и есть реализация
+интерфейса. Методы класса интерфейс являются чисто виртуальными и в классах наследниках
+определяются индивидуально, что по сути является полиморфизмом (из определения) для класса
+Interface. Эта процедура работы с классом интерфейс нужна для того, чтобы наш класс Human
+(человек, использующий интерфейс) мог взаимодействовать с любым внешним классом (с родительским
+классом интерфейс), при условии содержания (и определения) в этом дочернем классе методов класса
+Interface. В нашем случае можно создать любой класс транспортного средства, унаследованного от
+класса Interface и определяющего в себе все методы класса Interface, и, используя указатель
+на класс Interface, создать дочерний объект транспортного средства, с которым при выполнении
+всех вышеперичиленных условий запросто сможет работать класс Human.*/
+
+
+#include <iostream>
+using namespace std;
+
+class Interface {
+public:
+	void virtual twistthewheel() = 0;
+	void virtual ride() = 0;
+};
+
+class Sportbike : public Interface {
+public:
+	void twistthewheel() override;
+	void ride() override;
+};
+
+void Sportbike::twistthewheel() {
+	cout << "class : Sportbeke, method : twistthewheel()" << endl;
+}
+void Sportbike::ride() {
+	cout << "class : Sportbike, method : ride()" << endl;
+}
+
+
+class Car : public Interface {
+public:
+	void twistthewheel() override;
+	void ride() override;
+};
+
+void Car::twistthewheel() {
+	cout << "class : Car, method : twistthewheel()" << endl;
+}
+void Car::ride() {
+	cout << "class : Car, method : ride()" << endl;
+}
+
+class Human {
+public:
+	void usevehicle(Interface& vehicle) {
+		vehicle.twistthewheel();
+	}
+};
+
+int main() {
+
+	Human human;
+	Car car;
+
+	human.usevehicle(car);
+
+	return 0;
+}
+
